@@ -19,6 +19,14 @@ module Paperclip
             if options[dimension] && dimensions.send(dimension) != options[dimension].to_f
               record.errors.add(attribute.to_sym, :dimension, dimension_type: dimension.to_s, dimension: options[dimension], actual_dimension: dimensions.send(dimension).to_i)
             end
+            max_dim = "max_#{dimension}".to_sym
+            if options[max_dim] && dimensions.send(dimension) > options[max_dim]
+              record.errors.add(attribute.to_sym, "#{dimension} should be a maximum of #{options[max_dim]} but is #{dimensions.send(dimension).to_i}")
+            end
+            min_dim = "min_#{dimension}".to_sym
+            if options[min_dim] && dimensions.send(dimension) < options[min_dim]
+              record.errors.add(attribute.to_sym, "#{dimension} should be a minimum of #{options[min_dim]} but is #{dimensions.send(dimension).to_i}")
+            end
           end
         rescue Paperclip::Errors::NotIdentifiedByImageMagickError
           Paperclip.log("cannot validate dimensions on #{attribute}")

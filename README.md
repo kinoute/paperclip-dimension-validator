@@ -31,6 +31,15 @@ class Image < ActiveRecord::Base
 end
 ```
 
+**Example 2**
+```ruby
+class Image < ActiveRecord::Base
+  has_attached_file :avatar
+
+  validates_attachment :avatar, dimensions: { min_height: 30, min_width: 30, min_height: 2000, max_width: 2000 }
+end
+```
+
 ## Testing
 
 paperclip-dimension-validator includes rspec-compatible matchers for testing.
