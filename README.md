@@ -36,7 +36,7 @@ end
 class Image < ActiveRecord::Base
   has_attached_file :avatar
 
-  validates_attachment :avatar, dimensions: { min_height: 30, min_width: 30, min_height: 2000, max_width: 2000 }
+  validates_attachment :avatar, dimensions: { min_height: 30, min_width: 30, max_height: 2000, max_width: 2000 }
 end
 ```
 
