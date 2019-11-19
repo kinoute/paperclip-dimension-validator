@@ -28,6 +28,15 @@ module Paperclip
               record.errors.add(attribute.to_sym, "#{dimension} should be a minimum of #{options[min_dim]} but is #{dimensions.send(dimension).to_i}")
             end
           end
+          if options[:min_pixels] || options[:max_pixels]
+            actual_pixels = dimensions.width * dimensions.height
+            if options[:min_pixels] && actual_pixels < options[:min_pixels]
+              record.errors.add(:base, "width x height should be a minimum of #{options[:min_pixels]} but is #{actual_pixels}")
+            end
+            if options[:max_pixels] && (dimensions.width * dimensions.height) > options[:max_pixels]
+              record.errors.add(:base, "width x height should be a maximum of #{options[:max_pixels]} but is #{actual_pixels}")
+            end
+          end
         rescue Paperclip::Errors::NotIdentifiedByImageMagickError
           Paperclip.log("cannot validate dimensions on #{attribute}")
         end

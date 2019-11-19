@@ -27,6 +27,7 @@ This gem introduces the ```dimensions``` validator for Paperclip's
 class Image < ActiveRecord::Base
   has_attached_file :avatar
 
+  # Enforce exact width/height
   validates_attachment :avatar, dimensions: { height: 30, width: 30 }
 end
 ```
@@ -36,7 +37,18 @@ end
 class Image < ActiveRecord::Base
   has_attached_file :avatar
 
+  # Enforce min/max width/height
   validates_attachment :avatar, dimensions: { min_height: 30, min_width: 30, max_height: 2000, max_width: 2000 }
+end
+```
+
+**Example 3**
+```ruby
+class Image < ActiveRecord::Base
+  has_attached_file :avatar
+
+  # Ensure (width x height) is between 100 & 10000
+  validates_attachment :avatar, dimensions: { min_pixels: 100, max_pixels: 10000 }
 end
 ```
 
