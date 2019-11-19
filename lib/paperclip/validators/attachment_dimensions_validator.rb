@@ -29,7 +29,7 @@ module Paperclip
             end
           end
           if options[:min_pixels] || options[:max_pixels]
-            actual_pixels = dimensions.width * dimensions.height
+            actual_pixels = (dimensions.width * dimensions.height).to_i
             if options[:min_pixels] && actual_pixels < options[:min_pixels]
               record.errors.add(:base, "width x height should be a minimum of #{options[:min_pixels]} but is #{actual_pixels}")
             end
